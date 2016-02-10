@@ -11,8 +11,9 @@ a {
 }
 
 h1 {
-  font-style: italic;
+  font-weight: bold;
   margin-bottom: 10px;
+  color: cyan;
 }
 
 .navigation {
