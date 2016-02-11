@@ -168,12 +168,12 @@ module.exports = function(grunt) {
         'build',
       ]);
 
-    } else {
-      grunt.task.run([
+    }
+    grunt.task.run([
         'server-dev',
       ]);
     }
-  });
+  );
 
 
 
