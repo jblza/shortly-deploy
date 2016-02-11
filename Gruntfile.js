@@ -69,6 +69,7 @@ module.exports = function(grunt) {
     eslint: {
       target: [
         // Add list of files to lint here
+        'public/**/*.js'
       ]
     },
 
@@ -130,6 +131,11 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run([ 
+        'concat',
+        'uglify',
+        'cssmin'
+      ]);
     }
     grunt.task.run([ 'server-dev' ]);
   });
@@ -149,24 +155,26 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'eslint',
     'concat',
     'uglify',
     'cssmin'
   ]);
 
-  grunt.registerTask('upload', function(n) {
+  grunt.registerTask('deploy', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run([
+        'build',
+      ]);
 
     } else {
-      grunt.task.run([ 'server-dev' ]);
+      grunt.task.run([
+        'server-dev',
+      ]);
     }
   });
 
-  grunt.registerTask('deploy', [
-    'nodemon',
-
-  ]);
 
 
 };
