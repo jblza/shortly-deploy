@@ -7,9 +7,10 @@ module.exports = function(grunt) {
         separator: ';',
       },
       files: {
-        'public/client/client.js': ['public/client/*.js'],
-        'public/lib/lib.js': ['public/lib/*.js']
-      },
+        src: ['public/client/*.js'],
+        dest: 'public/dist/client.js'
+        //'public/dist/lib.js': ['public/lib/*.js']
+      }
     },
 
     mochaTest: {
@@ -21,6 +22,32 @@ module.exports = function(grunt) {
       }
     },
 
+    gitpush: {
+      your_target: {
+        options: {
+          remote: 'live',
+          branch: 'master'
+        }
+      }
+    },
+
+    gitadd: {
+      task:{
+        options: {
+          all: true
+        }
+      }
+    },
+
+    gitcommit: {
+      your_target: {
+        options :{
+          message: 'grunt',
+
+        }
+      }
+    },
+
     nodemon: {
       dev: {
         script: 'server.js'
@@ -28,6 +55,15 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        mangle: false
+      },
+      my_target: {
+        files: {
+          'public/dist/client.min.js': ['public/dist/client.js']
+         // 'public/dist/lib.min.js': ['public/dist/lib.js']
+        }
+      },
     },
 
     eslint: {
@@ -37,6 +73,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      target: {
+        files: {
+          'public/dist/style.min.js': ['public/style.css']
+        }
+      },
     },
 
     watch: {
@@ -70,6 +111,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-git');
 
   grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
@@ -92,19 +134,24 @@ module.exports = function(grunt) {
     grunt.task.run([ 'server-dev' ]);
   });
 
-  grunt.registerTask('concat', [
-    'concat'
-  ]);
-
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
+
+  grunt.registerTask('push', [
+    'gitadd',
+    'gitcommit',
+    'gitpush'
+  ]);
 
   grunt.registerTask('test', [
     'mochaTest'
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'uglify',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
