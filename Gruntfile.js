@@ -3,6 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';',
+      },
+      files: {
+        'public/client/client.js': ['public/client/*.js'],
+        'public/lib/lib.js': ['public/lib/*.js']
+      },
     },
 
     mochaTest: {
@@ -85,6 +92,10 @@ module.exports = function(grunt) {
     grunt.task.run([ 'server-dev' ]);
   });
 
+  grunt.registerTask('concat', [
+    'concat'
+  ]);
+
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
@@ -99,13 +110,15 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
   grunt.registerTask('deploy', [
-    // add your deploy tasks here
+    'nodemon',
+
   ]);
 
 
