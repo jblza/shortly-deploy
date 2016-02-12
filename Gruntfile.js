@@ -113,6 +113,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-git');
+  grunt.loadNpmTasks('grunt-services');
 
   grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
@@ -170,7 +171,8 @@ module.exports = function(grunt) {
 
     }
     grunt.task.run([
-        'server-dev',
+        'startMongo',
+        'server-dev'
       ]);
     }
   );

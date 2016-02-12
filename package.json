@@ -33,6 +33,9 @@
   },
   "devDependencies": {
     "grunt-git": "^0.3.7",
+    "grunt-services": "^0.1.0",
+    "mongo": "^0.1.0",
+    "mongoose": "^3.8.39",
     "supertest": "^0.10.0"
   }
 }
